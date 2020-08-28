@@ -14,12 +14,14 @@ def draw_map(G, zoom = 16):
     center_node = nodes_frame.loc[center_osmid]
     location = (center_node['y'], center_node['x'])
     m = lf.Map(center = location, zoom = zoom)
+
     for _, row in ways_frame.iterrows():
         lines = lf.Polyline(
-        locations = [list(elem)[::-1] for elem in [*row['geometry'].coords]],
-        color = "black",
-        fill = False,
-        weight = 1
-    )
-    m.add_layer(lines)
+            locations = [list(elem)[::-1] for elem in [*row['geometry'].coords]],
+            color = "black",
+            fill = False,
+            weight = 1
+        )
+        m.add_layer(lines)
+
     return m

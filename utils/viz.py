@@ -1,5 +1,6 @@
 """ Provides some utilities to ease the usage of ipyleaflet with osmnx """
 
+import pandas, numpy
 import ipyleaflet as lf
 import osmnx as ox
 
@@ -14,7 +15,7 @@ def draw_map(G, zoom = 16):
     location = (center_node['y'], center_node['x'])
     m = lf.Map(center = location, zoom = zoom)
     for _, row in ways_frame.iterrows():
-        lines = Polyline(
+        lines = lf.Polyline(
         locations = [list(elem)[::-1] for elem in [*row['geometry'].coords]],
         color = "black",
         fill = False,

@@ -1,3 +1,1 @@
-def printH():
-	print("hello world")
-
+""" Provides some utilities to ease the usage of osmnx """

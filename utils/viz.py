@@ -10,7 +10,7 @@ def draw_map(G, zoom = 16):
     G_gdfs = ox.graph_to_gdfs(G)
     nodes_frame = G_gdfs[0]
     ways_frame = G_gdfs[1]
-    center_node = nodes_frame.loc[node_center]
+    center_node = nodes_frame.loc[center_osmid]
     location = (center_node['y'], center_node['x'])
     m = lf.Map(center = location, zoom = zoom)
     for _, row in ways_frame.iterrows():

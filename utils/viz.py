@@ -2,10 +2,49 @@
 
 import pandas, numpy
 import ipyleaflet as lf
+import folium as fl
 import osmnx as ox
 
 
-def draw_map(G, highlight = None , zoom = 16):
+try:
+    import google.colab
+    IN_COLAB = True
+except:
+    IN_COLAB = False
+
+
+draw_map = None
+draw_route = None
+
+
+
+def draw_map_folium(G, highlight = None, zoom = 16):
+    center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]
+    G_gdfs = ox.graph_to_gdfs(G)
+    nodes_frame = G_gdfs[0]
+    ways_frame = G_gdfs[1]
+    center_node = nodes_frame.loc[center_osmid]
+    loc = [center_node['y'], center_node['x']]
+    m = fl.Map(location = loc, zoom_start = zoom)
+
+    for _, row in ways_frame.iterrows():
+        line = [elem[::-1] for elem in [*row['geometry'].coords]]
+        lines = [[u, v] for u, v in zip(line[0:], line[1:])]
+        polyline = fl.PolyLine(locations = lines, color = 'black', weight=2)
+        m.add_child(polyline)
+
+    if highlight:
+        kw = dict(fill_color='red', radius=5)
+        for node_osmid in highlight:
+            node = nodes_frame.loc[node_osmid]
+            node_xy = [node['y'], node['x']]
+            marker = fl.CircleMarker(node_xy, **kw)
+            m.add_child(marker)
+    return m
+
+
+
+def draw_map_leaflet(G, highlight = None , zoom = 16):
     """ draws ipyleaflet map with location as center of the map """
     center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]
     G_gdfs = ox.graph_to_gdfs(G)
@@ -13,7 +52,7 @@ def draw_map(G, highlight = None , zoom = 16):
     ways_frame = G_gdfs[1]
     center_node = nodes_frame.loc[center_osmid]
     location = (center_node['y'], center_node['x'])
-    m = lf.Map(center = location, zoom = zoom)
+    m = lf.Map(center = location, zoom = red)
 
     for _, row in ways_frame.iterrows():
         lines = lf.Polyline(
@@ -34,7 +73,7 @@ def draw_map(G, highlight = None , zoom = 16):
 
     return m
 
-def draw_route(G, route, zoom = 16):
+def draw_route_leaflet(G, route, zoom = 16):
     center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]
     G_gdfs = ox.graph_to_gdfs(G)
     nodes_frame = G_gdfs[0]

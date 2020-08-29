@@ -41,6 +41,36 @@ def draw_map_folium(G, highlight = None, zoom = 16):
             m.add_child(marker)
     return m
 
+def draw_route_folium(G, route, zoom = 16):
+    center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]
+    G_gdfs = ox.graph_to_gdfs(G)
+    nodes_frame = G_gdfs[0]
+    ways_frame = G_gdfs[1]
+    center_node = nodes_frame.loc[center_osmid]
+    loc = [center_node['y'], center_node['x']]
+    m = fl.Map(location = loc, zoom_start = zoom)
+
+    start_node = nodes_frame.loc[route[0]]
+    end_node = nodes_frame.loc[route[len(route)-1]]
+
+    kw = dict(fill_color='red', radius=5)
+    start_xy = [start_node['y'], start_node['x']]
+    end_xy = [end_node['y'], end_node['x']]
+    marker = fl.CircleMarker(location = start_xy, **kw)
+    m.add_child(marker)
+    marker = fl.CircleMarker(location = end_xy, **kw)
+    m.add_child(marker)
+
+    for u, v in zip(route[0:], route[1:]):
+        x, y = (ways_frame.query(f'u == {u} and v == {v}').to_dict('list')['geometry'])[0].coords.xy
+        points = [*zip([*y],[*x])]
+        for u, v in zip(points[0:], points[1:]):
+            line = [[u, v]]
+            polyline = fl.PolyLine(locations = line, color = 'black', weight=2)
+            m.add_child(polyline)
+    
+    return m
+        
 
 
 def draw_map_leaflet(G, highlight = None , zoom = 16):
@@ -109,7 +139,7 @@ def draw_route_leaflet(G, route, zoom = 16):
 
 if IN_COLAB:
     draw_map = draw_map_folium
-    draw_route = None
+    draw_route = draw_route_folium
 else:
     draw_map = draw_map_leaflet
     draw_route = draw_route_leaflet

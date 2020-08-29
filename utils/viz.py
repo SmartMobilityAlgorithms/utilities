@@ -12,7 +12,6 @@ try:
 except:
     IN_COLAB = False
 
-
 draw_map = None
 draw_route = None
 
@@ -108,3 +107,9 @@ def draw_route_leaflet(G, route, zoom = 16):
     
 
 
+if IN_COLAB:
+    draw_map = draw_map_folium
+    draw_route = None
+else:
+    draw_map = draw_map_leaflet
+    draw_route = draw_route_leaflet

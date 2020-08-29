@@ -9,22 +9,22 @@ Here is the general structure and where to look it you want to see what is happe
 ```
 utils
 │       
-└─── common.py ==> this module is meant for hiding bad code design in a nice looking API 
+└─── common.py ==> This module is meant for hiding bad code design in a nice looking API 
 │  
 │ 
 │ 
 │
-└─── jupyter.py ==> this module is for handling the quirks of jupyter notebook without 
+└─── jupyter.py ==> This module is for handling the quirks of jupyter notebook without 
 │                   polluting the notebook with distracting commands and functions
 │ 
 │ 
 │  
-└─── omx.py ==> this module is wrapper over osmnx to make the dealing with map 
+└─── omx.py ==> This module is wrapper over osmnx to make the dealing with map 
 │               graphs the same as if you have vanilla networkx graph without coordinates and geopandas hustle
 │ 
 │ 
 │  
-└─── viz.py ==> we had a problem; ipyleaflet can't run on google colab but it so good to be ditched for folium
+└─── viz.py ==> We had a problem; ipyleaflet can't run on google colab but it so good to be ditched for folium
                 which is OK and can be run on google colab but we couldn't resist the desire for you to see ipyleaflet in action
                 on your local machine.
                 

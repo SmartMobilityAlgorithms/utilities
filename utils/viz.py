@@ -51,7 +51,7 @@ def draw_map_leaflet(G, highlight = None , zoom = 16):
     ways_frame = G_gdfs[1]
     center_node = nodes_frame.loc[center_osmid]
     location = (center_node['y'], center_node['x'])
-    m = lf.Map(center = location, zoom = red)
+    m = lf.Map(center = location, zoom = zoom)
 
     for _, row in ways_frame.iterrows():
         lines = lf.Polyline(
@@ -79,7 +79,7 @@ def draw_route_leaflet(G, route, zoom = 16):
     ways_frame = G_gdfs[1]
     center_node = nodes_frame.loc[center_osmid]
     location = (center_node['y'], center_node['x'])
-    m = lf.Map(center = location, zoom = 16)
+    m = lf.Map(center = location, zoom = zoom)
 
     start_node = nodes_frame.loc[route[0]]
     end_node = nodes_frame.loc[route[len(route)-1]]

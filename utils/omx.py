@@ -59,8 +59,7 @@ class Node:
         return meters
     
     # the following two methods are for supporting
-    # list usage and some optimization to get over
-    # the networkx dictionary hurdle
+    # list comprehension 
 
     def __eq__(self, other):
         try:

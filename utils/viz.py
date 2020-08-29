@@ -5,7 +5,7 @@ import ipyleaflet as lf
 import osmnx as ox
 
 
-def draw_map(G, zoom = 16):
+def draw_map(G, highlight = None , zoom = 16):
     """ draws ipyleaflet map with location as center of the map """
     center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]
     G_gdfs = ox.graph_to_gdfs(G)
@@ -23,5 +23,12 @@ def draw_map(G, zoom = 16):
             weight = 1
         )
         m.add_layer(lines)
+
+    if highlight:
+        for node_osmid in highlight:
+            node = nodes_frame.loc[node_osmid]
+            node_xy = (node['y'], node['x'])
+            marker = lf.Marker(location = node_xy, draggable = False)
+            m.add_layer(marker)
 
     return m

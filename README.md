@@ -4,7 +4,7 @@ This is behind the scenes for all the repositories and code in the book.
 
 ---
 
-Here is the general structure and where to look it you want to see what is happening
+Here is the general structure and where to look at if you want to see what is happening
 
 ```
 utils

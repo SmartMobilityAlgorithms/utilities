@@ -78,7 +78,7 @@ def draw_map_leaflet(G, highlight = None , zoom = 16):
     """ draws ipyleaflet map with location as center of the map """
     
     if len(G) >= 1000:
-        print(f"The graph has {len(G)} which is a loot, we will use basic faster folium instead")
+        print(f"The graph has {len(G)} which is a lot, we will use basic faster folium instead")
         m = ox.plot_graph_folium(G = G)
         return m
         
@@ -111,9 +111,9 @@ def draw_map_leaflet(G, highlight = None , zoom = 16):
 
 def draw_route_leaflet(G, route, zoom = 16):
     """ draws ipyleaflet map with antpath as route"""
-
+    
     if len(G) >= 1000:
-        print(f"The graph has {len(G)} which is a loot, we will use basic faster folium instead")
+        print(f"The graph has {len(G)} which is a lot, we will use basic faster folium instead")
         m = ox.plot_route_folium(G = G, route = route)
         return m
 

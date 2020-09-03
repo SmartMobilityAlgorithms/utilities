@@ -4,7 +4,7 @@ import pandas, numpy
 import ipyleaflet as lf
 import folium as fl
 import osmnx as ox
-import netowkrx as nx
+import networkx as nx
 
 
 try:

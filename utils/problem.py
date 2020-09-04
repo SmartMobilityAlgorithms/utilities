@@ -1,5 +1,7 @@
 """ Provides some utilities for specific problems/algorithms like heuristic functions """
 
+import math
+
 """
 Used in A-star algorithm; it takes the source and destination node
 and calculate the summation of straight line distance between each node

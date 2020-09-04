@@ -1,6 +1,7 @@
 """ Provides some utilities for specific problems/algorithms like heuristic functions """
 
 import math
+import heapq
 
 """
 Used in A-star algorithm; it takes the source and destination node

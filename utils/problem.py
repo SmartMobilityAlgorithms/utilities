@@ -7,6 +7,8 @@ and to origin and each node to the destination.
 
 The value of the summation is not the actual distance but up to the actual scale as 
 we use matplotlib coordinates (x,y)
+
+return dictionary
 """
 
 def astar_heuristic(G, origin, destination):

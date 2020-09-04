@@ -9,9 +9,14 @@ Here is the general structure and where to look at if you want to see what is ha
 ```
 utils
 │       
-└─── common.py ==> This module is meant for hiding bad code design in a nice looking API 
+└─── common.py ==> This module is here for providing a nice interface to unnecessary complexity 
 │  
 │ 
+│
+└─── problem.py ==> This module is for problem-specific utilities like the heuristic functions 
+│                   or data structures used in algorithms
+│ 
+│
 │ 
 │
 └─── jupyter.py ==> This module is for handling the quirks of jupyter notebook without 

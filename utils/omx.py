@@ -38,13 +38,11 @@ class Node:
     # returns the path from that node to the origin as a list and the length of that path
     def path(self):
         node = self
-        length = 0
         path = []
         while node:
-            length += node.distance
             path.append(node.osmid)
             node = node.parent
-        return path[::-1], length
+        return path[::-1]
     
     # the following two methods are for dictating how comparison works
 
@@ -57,3 +55,15 @@ class Node:
     
     def __hash__(self):
         return hash(self.osmid)
+
+
+"""
+Given an iterable with nodes ids and the networkx graph
+The function calculated the weight of the route
+"""
+
+def cost(G, route):
+    weight = 0
+    for u, v in zip(route, route[1:]):
+        weight += G[u][v][0]['length']
+    return weight

@@ -26,9 +26,6 @@ class Node:
         # unique identifier for each node so we don't use the dictionary returned from osmnx
         self.osmid = osmid
         
-        # the distance from the origin to that node --- sum of edges length
-        self.from_origin = self.distance_from_origin()
-
         # the graph
         self.G = graph
     
@@ -49,17 +46,7 @@ class Node:
             node = node.parent
         return path[::-1], length
     
-    # return the summation of edges length from the origin --- used in dijkstra
-    def distance_from_origin(self):
-        meters = 0
-        node = self
-        while node:
-            meters += node.distance
-            node = node.parent
-        return meters
-    
-    # the following two methods are for supporting
-    # list comprehension 
+    # the following two methods are for dictating how comparison works
 
     def __eq__(self, other):
         try:

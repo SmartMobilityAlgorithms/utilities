@@ -66,7 +66,7 @@ def draw_route_folium(G, route, zoom = 16):
         try:
             x, y = (ways_frame.query(f'u == {u} and v == {v}').to_dict('list')['geometry'])[0].coords.xy
         except:
-            x, y = (ways_frame.query(f'u == {v} and v == {u}').to_dict('list')['geometry'])[0].coords.xy
+            y, x = (ways_frame.query(f'u == {v} and v == {u}').to_dict('list')['geometry'])[0].coords.xy
         points = [*zip([*y],[*x])]
         for u, v in zip(points[0:], points[1:]):
             line = [[u, v]]
@@ -142,7 +142,7 @@ def draw_route_leaflet(G, route, zoom = 16):
         try:
             x, y = (ways_frame.query(f'u == {u} and v == {v}').to_dict('list')['geometry'])[0].coords.xy
         except:
-            x, y = (ways_frame.query(f'u == {v} and v == {u}').to_dict('list')['geometry'])[0].coords.xy
+            y, x = (ways_frame.query(f'u == {v} and v == {u}').to_dict('list')['geometry'])[0].coords.xy
         points = map(list, [*zip([*y],[*x])])
         ant_path = lf.AntPath(
             locations = [*points], 

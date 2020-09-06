@@ -73,3 +73,26 @@ def cost(G, route):
             # it won't affect anything else
             weight += G[v][u][0]['length'] 
     return weight
+
+
+"""
+Given an itertable with nodes id and the networkx graph
+The function will calculate the weight of the route as
+if it is as tour, so after arriving at the last node
+we will add the weight of the edge connecting the last node
+with the first one
+
+the expected route here is tuple
+"""
+def cost_tour(G, route):
+    weight = 0
+    route = list(route)
+    for u, v in zip(route, route[1:]+[route[0]]):
+        try: 
+            weight += G[u][v][0]['length']
+        except:
+            # this is for handling bi-directional search
+            # because some streets are one-way otherwise
+            # it won't affect anything else
+            weight += G[v][u][0]['length']
+    return weight

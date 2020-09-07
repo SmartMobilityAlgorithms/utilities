@@ -1,5 +1,4 @@
-import sys, os
-sys.path.append("../utils")
+import sys
 
 try:
   import google.colab

@@ -29,7 +29,7 @@ utils
 │ 
 │ 
 │  
-└─── viz.py ==> We had a problem; ipyleaflet can't run on google colab but it so good to be ditched for folium
+└─── viz.py ==> We had a problem; ipyleaflet can't run on google colab but it was so good to be ditched for folium
                 which is OK and can be run on google colab but we couldn't resist the desire for you to see ipyleaflet in action
                 on your local machine.
                 

@@ -5,7 +5,7 @@ common stuff for gluing things together and hiding unnecessary complexity
 import random
 from collections import deque
 
-from .omx import *
+from .omx import Node
 
 
 """

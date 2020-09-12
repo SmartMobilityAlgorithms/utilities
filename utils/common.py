@@ -5,7 +5,7 @@ common stuff for gluing things together and hiding unnecessary complexity
 import random
 from collections import deque
 
-from .problem import *
+from .omx import *
 
 """
 Generate random simple path between source and destination node

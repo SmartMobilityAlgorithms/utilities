@@ -89,6 +89,57 @@ def randomized_search(G, source, destination, nums_of_paths = 1):
 
 
 """
+Find the route between `source` and `destination` nodes when the list of nodes
+specified in `failed` acts if they are not in the graph.
+"""
+
+def shortest_path_with_failed_nodes(G, source, target, failed : list):
+    origin = Node(graph = G, osmid = source)
+    destination = Node(graph = G, osmid = target)
+    
+    # you can't introduce failure in the source and target
+    # node, because your problem will lose its meaning
+    if origin.osmid in failed or destination.osmid in failed:
+        raise Exception("source/destination node can't failed")
+    
+    # we need to flag every node whether it is failed or not
+    failure_nodes = {node: False for node in G.nodes()}
+    failure_nodes.update({node: True for node in failed})
+    
+    # the normal implementation of dijkstra
+    shortest_dist = {node: math.inf for node in G.nodes()}
+    unrelaxed_nodes = [Node(graph = G, osmid = node) for node in G.nodes()]
+    seen = set()
+    
+    shortest_dist[source] = 0
+    
+    while len(unrelaxed_nodes) > 0:
+        node = min(unrelaxed_nodes, key = lambda node : shortest_dist[node])
+        
+        if node == destination:
+            return node.path()
+        
+        unrelaxed_nodes.remove(node); seen.add(node.osmid) # relaxing the node
+            
+        for child in node.expand():
+            # if it is failed node, skip it
+            if failure_nodes[child.osmid] or\
+                child.osmid in seen: continue
+                
+            child_obj = next((node for node in unrelaxed_nodes if node.osmid == child.osmid), None)
+            child_obj.distance = child.distance
+
+            distance = shortest_dist[node.osmid] + child.distance
+            if distance < shortest_dist[child_obj.osmid]:
+                shortest_dist[child_obj.osmid] = distance
+                child_obj.parent = node
+                
+    # in case the node can't be reached from the origin
+    return math.inf
+
+
+
+"""
 Return true with probability p.
 """
 def probability(p):

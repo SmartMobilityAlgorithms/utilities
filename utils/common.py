@@ -32,10 +32,22 @@ def randomized_search(G, source, destination, nums_of_paths = 1):
         frontier = deque([origin])
         explored = set()
         found = False
-        while frontier and not found:
+        restart = False
+
+        while frontier and not found and not restart:
             node = random.choice(frontier)   # here is the randomization part
             frontier.remove(node)
             explored.add(node)
+
+            # if the number of nodes in the frontier or explored
+            # is bigger than half the number of nodes in the graph
+            # that means the search took so long and we better restart it
+            # and start a new fresh one
+
+            if len(frontier) >= len(G) // 2 \
+               or len(explored) >= len(G) // 2:
+                restart = True
+                continue
 
             for child in node.expand():
                 if child not in explored and child not in frontier:
@@ -43,5 +55,6 @@ def randomized_search(G, source, destination, nums_of_paths = 1):
                         route = child.path()
                         yield route
                         found = True
+                        continue
                     frontier.append(child)
         nums -= 1

@@ -17,8 +17,8 @@ of all the edges of the graph which would REALLY hurt our performance when you u
 over a complete city or something like that.
 
 Our method is very simple randomized graph search, and the randomization is about randomly selecting
-the node to expand in each step, and only keeping the frontier in our memory. It is obviously has time/memory
-complexity O(n).
+the node to expand in each step, and only keeping the frontier in our memory. It is obviously has time
+complexity O(n+m) and space complexity O(n).
 
 It is an iterator function so we don't overload our memory if you wanted a lot of paths.
 """

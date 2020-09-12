@@ -3,7 +3,7 @@
 import osmnx
 from pandas.core.common import flatten
 
-from common import *
+from .common import *
 
 """
 This is a wrapper around osmnx nodes so we can query a single node

@@ -48,3 +48,10 @@ def randomized_search(G, source, destination, nums_of_paths = 1):
                         continue
                     frontier.append(child)
         nums -= 1
+
+
+"""
+Return true with probability p.
+"""
+def probability(p):
+    return p > random.uniform(0.0, 1.0)

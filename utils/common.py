@@ -46,6 +46,7 @@ def randomized_search(G, source, destination, nums_of_paths = 1):
 
             if len(frontier) >= len(G) // 2 \
                or len(explored) >= len(G) // 2:
+                nums += 1                  # so this failed attempt doesn't count
                 restart = True
                 continue
 

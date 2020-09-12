@@ -12,12 +12,13 @@ Generate random simple path between source and destination node
 over a osmnx graph.
 
 We can use networkx.all_simple_paths iterator function which would serve the
-same purpose,but if you went to the its implementation you will see that they use stack
-of all the edges of the graph which would really hurt our performance when you use big graph
-over a complete city or something.
+same purpose, but if you went to the its implementation you will see that they use stack
+of all the edges of the graph which would REALLY hurt our performance when you use big graph
+over a complete city or something like that.
 
-Our method is randomized graph search, and the randomization is about randomly selecting
-the node to expand in each step, and only keeping the frontier in our memory.
+Our method is very simple randomized graph search, and the randomization is about randomly selecting
+the node to expand in each step, and only keeping the frontier in our memory. It is obviously has time/memory
+complexity O(n).
 
 It is an iterator function so we don't overload our memory if you wanted a lot of paths.
 """
@@ -32,23 +33,11 @@ def randomized_search(G, source, destination, nums_of_paths = 1):
         frontier = deque([origin])
         explored = set()
         found = False
-        restart = False
 
-        while frontier and not found and not restart:
+        while frontier and not found:
             node = random.choice(frontier)   # here is the randomization part
             frontier.remove(node)
             explored.add(node)
-
-            # if the number of nodes in the frontier or explored
-            # is bigger than half the number of nodes in the graph
-            # that means the search took so long and we better restart it
-            # and start a new fresh one
-
-            if len(frontier) >= len(G) // 2 \
-               or len(explored) >= len(G) // 2:
-                nums += 1                  # so this failed attempt doesn't count
-                restart = True
-                continue
 
             for child in node.expand():
                 if child not in explored and child not in frontier:

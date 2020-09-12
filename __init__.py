@@ -6,4 +6,4 @@ try:
 except:
   pass
 
-from utils import *
+from .utils import *

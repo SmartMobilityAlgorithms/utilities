@@ -106,8 +106,7 @@ def children_route(G, route):
             failing_nodes = route[i:j+1]
             # we can't work on the route list directly
             # because lists are passed by reference
-            stitched = copy.copy(route)
-            failing_node = stitched[i]
+            stitched = copy.deepcopy(route)
             to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[j+1], failing_nodes)
             stitched[i:j+1] = to_be_stitched[1:-1]      # we need to skip the first and starting nodes of this route
                                                         # because these nodes already exit
@@ -158,7 +157,7 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
 
     # you can't introduce failure in the source and target
     # node, because your problem will lose its meaning
-    if origin.osmid in failed or destination.osmid in failed:
+    if source in failed or target in failed:
         raise Exception("source/destination node can't failed")
 
     # we need to flag every node whether it is failed or not
@@ -183,7 +182,9 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
         for child in node.expand():
             # if it is failed node, skip it
             if failure_nodes[child.osmid] or\
-                child.osmid in seen: continue
+                child.osmid in seen or\
+                child.osmid == source or\
+                child.osmid == target: continue
 
             child_obj = next((node for node in unrelaxed_nodes if node.osmid == child.osmid), None)
             child_obj.distance = child.distance

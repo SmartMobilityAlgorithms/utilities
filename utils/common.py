@@ -77,40 +77,41 @@ Here is how it works; we have a route of length 10 from node A to node Z as foll
 
     route = [A, B, C, D, E, F, G, H, I, Q, Z]
 
-if we make the node B to fail/contracted so we need to find a new way
+If we make the node B to fail/contracted so we need to find a new way
 to get from A to C
 
     child = [A, M, N, C, D, E, F, G, H, I, Q, Z]
 
-the new route from A to C is [A, M, N, C] instead of [A, B, C], let's call
-that our first child. Our second child when we delete node C from the original
-route and see how we can get from B to D instead.
+The new route from A to C is [A, M, N, C] instead of [A, B, C], let's call
+that our first child. Our second child when we delete nodes B,C from the original
+route and see how we can get from A to D instead (shortest_path_with_failed_nodes), 
+our third child would be by failing nodes B,C,D, our fourth would be failing the node B,C,D,E.
 
-Based on that we have 8 children from a route of 10 nodes; each children is produced
-from contracting a node in the route except the source or destination.
+That will produce 9 children (we have 11 nodes), so we go in the same manner but
+we start by failing C not B and after that C,D instead of B,C this will produce
+8 children. After that we start failing D and then D,E and then D,E,F and that round
+produces 7 children. Hopefully you got what we are doing. 
+
+So a route with 11 node will produce (9+8+7+6+5+4+3+2+1) children.
+
+Hence, a route with N nodes will produce (N-2)*(N-1)/2 children.
 
 It is iterator function so it is lazy evaluated to avoid dealing with routes with big 
 number of nodes.
 """
 
 def children_route(G, route):
-    # now we will iterate over all the nodes except the source and destination
-    # node and fail them one node at a time and yield a new route by stitching
-    # a route between the node before and after the failing node into our 
-    # original route
-
     for i in range(1, len(route) - 1):
-        # we can't work on the route list directly
-        # because lists are passed by reference
-
-        stitched = copy.copy(route)
-        failing_node = stitched[i]
-        to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[i+1], [stitched[i]])
-        stitched[i] = to_be_stitched[1:-1]      # we need to skip the first and starting nodes of this route
-                                                # because these nodes already exit
-        
-        stitched = [*flatten(stitched)]         # stitched list is node list of lists so we need to flatten it
-        yield stitched
+        for j in range(i, len(route) -1):
+            failing_nodes = route[i:j+1]
+            # we can't work on the route list directly
+            # because lists are passed by reference
+            stitched = copy.copy(route)
+            failing_node = stitched[i]
+            to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[j+1], failing_nodes)
+            stitched[i:j+1] = to_be_stitched[1:-1]      # we need to skip the first and starting nodes of this route
+                                                        # because these nodes already exit
+            yield stitched
 
 """
 Given an iterable with nodes ids and the networkx graph

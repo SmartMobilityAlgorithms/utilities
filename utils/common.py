@@ -5,6 +5,7 @@ common stuff for gluing things together and hiding unnecessary complexity
 import osmnx
 import random
 import math
+import copy
 from collections import deque
 from pandas.core.common import flatten
 
@@ -101,11 +102,15 @@ def children_route(G, route):
     route = list(route) # because route could be passed as generator
 
     for i in range(1, len(route) - 1):
-        failing_node = route[i]
-        to_be_stitched = shortest_path_with_failed_nodes(G, route[i-1], route[i+1], [route[i]])
-        route[i] = to_be_stitched # route now is a list of lists so we need to flatten it
-        route = flatten(route)
-        yield route
+        # we can't work on the route list directly
+        # because lists are passed by reference
+
+        stitched = copy.copy(route)
+        failing_node = stitched[i]
+        to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[i+1], [stitched[i]])
+        stitched[i] = to_be_stitched      # route now is a list of lists so we need to flatten it
+        stitched = [*flatten(stitched)]   # pandas flatten function returns generator so we need to unpack it
+        yield stitched
 
 """
 Given an iterable with nodes ids and the networkx graph

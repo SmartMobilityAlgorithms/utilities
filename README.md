@@ -9,23 +9,19 @@ Here is the general structure and where to look at if you want to see what is ha
 ```
 utils
 │       
-└─── common.py ==> This module is here for providing a nice interface to unnecessary complexity 
-│  
+└─── common.py ==> This module is here for providing a nice interface to unnecessary complexity,
+|                  like handling graphs produced from osmnx and other utilities associated with
+│                  graphs.
 │ 
 │
 └─── problem.py ==> This module is for problem-specific utilities like the heuristic functions 
 │                   or data structures used in algorithms
 │ 
 │
-│ 
 │
 └─── jupyter.py ==> This module is for handling the quirks of jupyter notebook without 
 │                   polluting the notebook with distracting commands and functions
 │ 
-│ 
-│  
-└─── omx.py ==> This module is wrapper over osmnx to make the dealing with map 
-│               graphs the same as if you have vanilla networkx graph without coordinates and geopandas hustle
 │ 
 │ 
 │  

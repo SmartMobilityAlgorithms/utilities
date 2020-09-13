@@ -100,7 +100,7 @@ def children_route(G, route):
 
     for i in range(1, len(route) - 1):
         failing_node = route[i]
-        to_be_stitched = shortest_path_with_failed_nodes(G, route[i-1], route[i+1], route[i])
+        to_be_stitched = shortest_path_with_failed_nodes(G, route[i-1], route[i+1], [route[i]])
         route[i] = to_be_stitched # route now is a list of lists so we need to flatten it
         route = flatten(route)
         yield route

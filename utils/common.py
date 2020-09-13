@@ -108,8 +108,10 @@ def children_route(G, route):
         stitched = copy.copy(route)
         failing_node = stitched[i]
         to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[i+1], [stitched[i]])
-        stitched[i] = to_be_stitched      # route now is a list of lists so we need to flatten it
-        stitched = [*flatten(stitched)]   # pandas flatten function returns generator so we need to unpack it
+        stitched[i] = to_be_stitched[1:-1]      # we need to skip the first and starting nodes of this route
+                                                # because these nodes already exit
+        
+        stitched = [*flatten(stitched)]         # stitched list is node list of lists so we need to flatten it
         yield stitched
 
 """

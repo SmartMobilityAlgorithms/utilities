@@ -94,12 +94,10 @@ number of nodes.
 """
 
 def children_route(G, route):
-    
     # now we will iterate over all the nodes except the source and destination
     # node and fail them one node at a time and yield a new route by stitching
     # a route between the node before and after the failing node into our 
     # original route
-    route = list(route) # because route could be passed as generator
 
     for i in range(1, len(route) - 1):
         # we can't work on the route list directly

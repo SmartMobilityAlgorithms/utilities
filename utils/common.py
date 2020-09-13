@@ -4,6 +4,7 @@ common stuff for gluing things together and hiding unnecessary complexity
 
 import osmnx
 import random
+import math
 from collections import deque
 from pandas.core.common import flatten
 

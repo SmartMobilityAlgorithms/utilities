@@ -264,6 +264,8 @@ def randomized_search(G, source, destination):
                 frontier.append(child)
 
     raise Exception("destination and source are not on same component")
+
+
 """
 Return true with probability p.
 """

@@ -207,7 +207,9 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
         for child in node.expand():
             # if it is failed node, skip it
             if failure_nodes[child.osmid] or\
-                child.osmid in seen:
+                child.osmid in seen or\
+                child.osmid == source or\
+                child.osmid == target:
                 continue
 
             child_obj = next((node for node in unrelaxed_nodes if node.osmid == child.osmid), None)

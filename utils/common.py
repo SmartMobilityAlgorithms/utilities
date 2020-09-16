@@ -12,10 +12,10 @@ from pandas.core.common import flatten
 
 """
 This is a wrapper around osmnx nodes so we can query a single node
-with questions like:
-    how did we get here from the origin?
-    how far is the node from the origin? For Dijkstra
-    what are my children?
+with questions like that without having to deal with networkx dictionaries:
+    * how did we get here from the origin?
+    * what are my children?
+    * what is my unique id
 """
 
 class Node:

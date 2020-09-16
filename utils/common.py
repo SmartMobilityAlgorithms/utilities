@@ -231,29 +231,27 @@ the node to expand in each step, and only keeping the frontier in our memory. It
 complexity O(n+m) and space complexity O(n).
 It is an iterator function so we don't overload our memory if you wanted a lot of paths.
 """
-def randomized_search(G, source, destination, nums_of_paths = 1):
+def randomized_search(G, source, destination):
     origin = Node(graph = G, osmid = source)
     destination = Node(graph = G, osmid = destination)
     nums = nums_of_paths
     
-    while nums > 0:
-        route = [] # the route to be yielded
-        frontier = deque([origin])
-        explored = set()
-        found = False
-        while frontier and not found:
-            node = random.choice(frontier)   # here is the randomization part
-            frontier.remove(node)
-            explored.add(node)
-            for child in node.expand():
-                if child not in explored and child not in frontier:
-                    if child == destination:
-                        route = child.path()
-                        yield route
-                        found = True
-                        continue
-                    frontier.append(child)
-        nums -= 1
+    route = [] # the route to be yielded
+    frontier = deque([origin])
+    explored = set()
+    while frontier:
+        node = random.choice(frontier)   # here is the randomization part
+        frontier.remove(node)
+        explored.add(node.osmid)
+
+        for child in node.expand():
+            if child not in explored and child not in frontier:
+                if child == destination:
+                    route = child.path()
+                    return route
+                frontier.append(child)
+
+    raise Exception("destination and source are not on same component")
 """
 Return true with probability p.
 """

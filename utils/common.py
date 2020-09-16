@@ -115,7 +115,7 @@ def children_route(G, route):
             # because lists are passed by reference
             stitched = copy.deepcopy(route)
             failing_nodes = copy.deepcopy(route[i:j+1])
-            to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[j+1], failing_nodes)
+            to_be_stitched = shortest_path_with_failed_nodes(G, stitched, stitched[i-1], stitched[j+1], failing_nodes)
             
             # this would happen because one of the failing
             # nodes are articulation node and caused the graph

@@ -219,7 +219,9 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
                 child_obj.parent = node
 
     # in case the node can't be reached from the origin
-    # this happens when the target is not in the graph
+    # this return happens when the node is not on the graph
+    # at all, if it was on a different component the second
+    # return will be executed -- this is the third return
     
     return math.inf
 

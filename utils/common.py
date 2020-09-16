@@ -165,7 +165,7 @@ Find the route between `source` and `destination` nodes when the list of nodes
 specified in `failed` acts if they are not in the graph.
 """
 
-def shortest_path_with_failed_nodes(G, source, target, failed : list):
+def shortest_path_with_failed_nodes(G, route ,source, target, failed : list):
     origin = Node(graph = G, osmid = source)
     destination = Node(graph = G, osmid = target)
 
@@ -181,6 +181,12 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
     # we need to flag every node whether it is failed or not
     failure_nodes = {node: False for node in G.nodes()}
     failure_nodes.update({node: True for node in failed})
+
+    # we need to make sure that while expansion we don't expand
+    # any node from the original graph to avoid loops in our route
+    tabu_list = route[:route.index(source)] \
+                + \
+                route[route.index(target) + 1:] 
 
     # the normal implementation of dijkstra
     shortest_dist = {node: math.inf for node in G.nodes()}
@@ -208,8 +214,7 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
             # if it is failed node, skip it
             if failure_nodes[child.osmid] or\
                 child.osmid in seen or\
-                child.osmid == source or\
-                child.osmid == target:
+                child.osmid in tabu_list:
                 continue
 
             child_obj = next((node for node in unrelaxed_nodes if node.osmid == child.osmid), None)

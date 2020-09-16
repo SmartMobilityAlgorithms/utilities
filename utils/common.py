@@ -234,7 +234,6 @@ It is an iterator function so we don't overload our memory if you wanted a lot o
 def randomized_search(G, source, destination):
     origin = Node(graph = G, osmid = source)
     destination = Node(graph = G, osmid = destination)
-    nums = nums_of_paths
     
     route = [] # the route to be yielded
     frontier = deque([origin])

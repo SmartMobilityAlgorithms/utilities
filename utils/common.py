@@ -70,8 +70,7 @@ class Node:
 Find the neighbours of a route that has exact source/destination node.
 
 We had to define the meaning of finding neighbours for a route in a graph,
-because we needed it in local search algorithms like simulated annealing and
-genetic algorithm and tabu search.
+because we needed it in local search algorithms.
 
 Here is how it works; we have a route of length 10 from node A to node Z as follows
 
@@ -94,7 +93,16 @@ produces 7 children. Hopefully you got what we are doing.
 
 So a route with 11 node will produce (9+8+7+6+5+4+3+2+1) children.
 
-Hence, a route with N nodes will produce (N-2)*(N-1)/2 children.
+Hence, a route with N nodes will produce O((N-2)*(N-1)/2) children.
+
+Please be aware that this number is an upper limit to the number of children because
+this process of failing some nodes in the route and try to stitch the route could invalidate
+the process because if one of these failing nodes are articulation the graph would be 
+disconnected into >2 components.
+
+We catch articulation points in dijkstra if we are going to relax node with distance
+equal to math.inf because this means that there is no edge between it and any previous
+relaxed node.
 
 It is iterator function so it is lazy evaluated to avoid dealing with routes with big 
 number of nodes.
@@ -103,11 +111,17 @@ number of nodes.
 def children_route(G, route):
     for i in range(1, len(route) - 1):
         for j in range(i, len(route) -1):
-            failing_nodes = route[i:j+1]
             # we can't work on the route list directly
             # because lists are passed by reference
             stitched = copy.deepcopy(route)
+            failing_nodes = copy.deepcopy(route[i:j+1])
             to_be_stitched = shortest_path_with_failed_nodes(G, stitched[i-1], stitched[j+1], failing_nodes)
+            
+            # this would happen because one of the failing
+            # nodes are articulation node and caused the graph
+            # to be disconnected
+            if to_be_stitched == math.inf: continue
+
             stitched[i:j+1] = to_be_stitched[1:-1]      # we need to skip the first and starting nodes of this route
                                                         # because these nodes already exit
             yield stitched
@@ -173,6 +187,13 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
 
     while len(unrelaxed_nodes) > 0:
         node = min(unrelaxed_nodes, key = lambda node : shortest_dist[node])
+
+        # if we have relaxed articulation nodes in our graph
+        # halt the process -- we have more than one component
+        # in our graph which makes the question of shortest path
+        # invalid
+
+        if shortest_dist[node.osmid] == math.inf: return math.inf
 
         if node == destination:
             return node.path()

@@ -169,10 +169,14 @@ def shortest_path_with_failed_nodes(G, source, target, failed : list):
     origin = Node(graph = G, osmid = source)
     destination = Node(graph = G, osmid = target)
 
-    # you can't introduce failure in the source and target
+    ## you can't introduce failure in the source and target
     # node, because your problem will lose its meaning
-    if source in failed or target in failed:
-        raise Exception("source/destination node can't failed")
+    if source in failed: failed.remove(source)
+    if target in failed: failed.remove(target)
+    
+    # if after removing source/target node from failed
+    # list - just return math.inf which is equivalent to failure in search
+    if len(failed) == 0: return math.inf
 
     # we need to flag every node whether it is failed or not
     failure_nodes = {node: False for node in G.nodes()}

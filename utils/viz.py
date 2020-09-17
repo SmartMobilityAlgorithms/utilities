@@ -38,7 +38,7 @@ def draw_map_folium(G, highlight = None, zoom = 16):
         for node_osmid in highlight:
             node = nodes_frame.loc[node_osmid]
             node_xy = [node['y'], node['x']]
-            marker = fl.CircleMarker(node_xy, **kw)
+            marker = fl.Marker(node_xy, **kw)
             m.add_child(marker)
     return m
 
@@ -57,9 +57,9 @@ def draw_route_folium(G, route, zoom = 16):
     kw = dict(fill_color='red', radius=5)
     start_xy = [start_node['y'], start_node['x']]
     end_xy = [end_node['y'], end_node['x']]
-    marker = fl.CircleMarker(location = start_xy, **kw)
+    marker = fl.Marker(location = start_xy, **kw)
     m.add_child(marker)
-    marker = fl.CircleMarker(location = end_xy, **kw)
+    marker = fl.Marker(location = end_xy, **kw)
     m.add_child(marker)
 
     for u, v in zip(route[0:], route[1:]):

@@ -25,13 +25,9 @@ utils
 │ 
 │ 
 │  
-└─── viz.py ==> We had a problem; ipyleaflet can't run on google colab but it was so good to be ditched for folium
-                which is OK and can be run on google colab but we couldn't resist the desire for you to see ipyleaflet in action
-                on your local machine.
-                
-                So, this module knows when you are running local (with if statement) and would use ipyleaflet for visualization
-                and if you are running on the cloud it would be using folium, all for the same name of function so you don't
-                have to worry about anything - just call the same function and let us worry about all that local/cloud stuff.
+└─── viz.py ==> Wrapper around `folium` and `ipyleaflet` to ease visualization and choose the appropriate 
+                library for visulaization based on the size of the graph and the environment the notebook
+                running at.
 ```
 
 # Usage

@@ -19,9 +19,10 @@ with questions like that without having to deal with networkx dictionaries:
 """
 
 class Node:
+    # using __slots__ for optimization
+    __slots__ = ['node', 'distance', 'parent', 'osmid', 'G']
     # constructor for each node
     def __init__(self ,graph , osmid, distance = 0, parent = None):
-        
         # the dictionary of each node as in networkx graph --- still needed for internal usage
         self.node = graph[osmid]
         

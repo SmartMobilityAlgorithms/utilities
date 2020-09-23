@@ -6,8 +6,8 @@ import osmnx
 import random
 import math
 import copy
+import itertools
 from collections import deque
-from pandas.core.common import flatten
 
 
 """
@@ -272,3 +272,12 @@ Return true with probability p.
 """
 def probability(p):
     return p > random.uniform(0.0, 1.0)
+
+
+"""
+Flatten a list of lists
+"""
+def flatten(list2d):
+    return list(itertools.chain(*list2d))
+
+

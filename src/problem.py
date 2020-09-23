@@ -7,6 +7,7 @@ from collections import deque
 
 import numpy as np
 
+
 """
 Used in A-star algorithm; it takes the source and destination node
 and calculate the summation of straight line distance between each node

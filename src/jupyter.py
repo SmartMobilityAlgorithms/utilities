@@ -15,7 +15,7 @@ def source(*functions):
     source_code = '\n\n'.join(getsource(fn) for fn in functions)        
     display(HTML(highlight(source_code, PythonLexer(), HtmlFormatter(full=True))))
 
-""" animation function used in GIS routing notebook """"
+""" animation function used in GIS routing notebook """
 
 def update_plot(i, data, scat):
     scat.set_array(data[i])

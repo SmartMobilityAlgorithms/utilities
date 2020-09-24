@@ -8,6 +8,7 @@ from pygments import highlight
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.collections import LineCollection
+import numpy as np
 from operator import attrgetter
 
 def source(*functions):
@@ -21,7 +22,8 @@ def update_plot(i, data, scat):
     scat.set_array(data[i])
     return scat,
 
-def animate_simple(G, colors):
+def animate_simple(G, colors, speed = 100):
+    colors = np.array(colors)
     numframes = len(colors)
     node_Xs = [float(x) for _, x in G.nodes(data='x')]
     node_Ys = [float(y) for _, y in G.nodes(data='y')]
@@ -46,6 +48,6 @@ def animate_simple(G, colors):
     scat = ax.scatter(node_Xs, node_Ys,c=colors[0], s=30)
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-    ani = animation.FuncAnimation(fig, update_plot, frames=list(range(numframes)),interval=100
-                                 ,fargs = (colors, scat))
+    ani = animation.FuncAnimation(fig, update_plot, frames=list(range(numframes)),interval=speed
+                                 ,figsize=(8, 6) ,fargs = (colors, scat))
     return ani

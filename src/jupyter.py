@@ -49,5 +49,5 @@ def animate_simple(G, colors, speed = 100):
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
     ani = animation.FuncAnimation(fig, update_plot, frames=list(range(numframes)),interval=speed
-                                 ,figsize=(8, 6) ,fargs = (colors, scat))
+                                  ,fargs = (colors, scat))
     return ani

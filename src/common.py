@@ -282,11 +282,7 @@ def one_way_route(G, route):
         i = 0
         j = 1
         found = False
-        while not found and j < len(route) - 1:
-            # exception will be generated if there is
-            # not an edge between u, v when generated
-            # we fail the node v and stitch the gap with
-            # a route between u and node after v
+        while not found and j < len(route) - 1:          
             try:
                 u, v = route[i], route[j]
                 G[u][v]
@@ -300,9 +296,6 @@ def one_way_route(G, route):
                                                                 node_before,\
                                                                 node_after,\
                                                                 node_failing)
-                # what if we have failed articulation point and we disconnected
-                # the graph? we fail more edges and increase our window by one node
-                # on either sides -- this doesn't happen a lot
                 while type(output) is not list and i > 1 and j < len(route) - 1:
                     i-=1
                     j+=1
@@ -313,12 +306,10 @@ def one_way_route(G, route):
                                                                 node_before,\
                                                                 node_after,\
                                                                 node_failing)
-                
                 route[i:j+2] = output
-
+                found = True
                 i+=1
                 j+=1
-            found = True
     return route
 
 """

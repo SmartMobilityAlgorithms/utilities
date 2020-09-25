@@ -135,13 +135,7 @@ The function calculated the weight of the route
 def cost(G, route):
     weight = 0
     for u, v in zip(route, route[1:]):
-        try: 
-            weight += G[u][v][0]['length']
-        except:
-            # this is for handling bi-directional search
-            # because some streets are one-way otherwise
-            # it won't affect anything else
-            weight += G[v][u][0]['length'] 
+        weight += G[u][v][0]['length']   
     return weight
 
 

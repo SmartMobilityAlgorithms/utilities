@@ -298,6 +298,7 @@ def one_way_route(G, route):
                                                                 [node_failing])
                 i+=1
                 j+=1
+            found = True
     return route
 
 """

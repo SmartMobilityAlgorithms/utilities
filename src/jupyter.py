@@ -5,6 +5,7 @@ from IPython.display import HTML, display,IFrame
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 from pygments import highlight
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.collections import LineCollection
@@ -23,6 +24,9 @@ def update_plot(i, data, scat):
     return scat,
 
 def animate_simple(G, colors, speed = 100):
+    # to handle big animations like bi directional search
+    matplotlib.rcParams['animation.embed_limit'] = 2**128
+
     colors = np.array(colors)
     numframes = len(colors)
     node_Xs = [float(x) for _, x in G.nodes(data='x')]

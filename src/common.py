@@ -262,6 +262,45 @@ def randomized_search(G, source, destination):
 
 
 """
+Fix routes that are the product of merging two routes in opposite directions
+by deleting the node that causes that and replace that gap with the shortest
+path between the node before and after the gap.
+
+This method was made to handle the routes generated from bi-directional
+"""
+def one_way_route(G, route):
+    def isvalid(G, route):
+        for u, v in zip(route, route[1:]):
+            try:
+                G[u][v]
+            except:
+                return False
+        return True
+
+    while True:
+        if isvalid(G, route): break
+        i = 0
+        j = 1
+        found = False
+        while not found and j < len(route) - 1:
+            try:
+                u, v = route[i], route[j]
+                G[u][v]
+                i+=1
+                j+=1
+            except:
+                node_before = route[i]
+                node_failing = route[j]
+                node_after = route[j+1]
+                route[i:j+2] = shortest_path_with_failed_nodes(G, route,\
+                                                                node_before,\
+                                                                node_after,\
+                                                                [node_failing])
+                i+=1
+                j+=1
+    return route
+
+"""
 Return true with probability p.
 """
 def probability(p):

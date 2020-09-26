@@ -26,8 +26,16 @@ utils
 │ 
 │  
 └─── viz.py ==> Wrapper around `folium` and `ipyleaflet` to ease visualization and choose the appropriate 
-                library for visulaization based on the size of the graph and the environment the notebook
-                running at.
+|               library for visulaization based on the size of the graph and the environment the notebook
+|               running at.
+|
+|
+|
+|
+└─── poi.py ==> This module would be used to download data of point of interests and construct a graph based
+                on the actual roads between the POIs based on [`osrm`](http://project-osrm.org/) with a lot
+                of customization. It would be primarily used on case studies and hopefully it would be of some 
+                help in your projects at the end of the semester. 
 ```
 
 # Usage

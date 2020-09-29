@@ -4,7 +4,6 @@ import math
 import heapq
 import random
 from collections import deque
-
 import numpy as np
 
 
@@ -51,10 +50,10 @@ distance: the distance of the great circle arc between two points
           calculated by harversine method
 """
 
-def haversine_distance (lon1, lat1, lon2, lat2):
+def haversine_distance(lon1, lat1, lon2, lat2):
 
     # convert decimal degrees to radians 
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
 
     # haversine formula 
     dlon = lon2 - lon1 

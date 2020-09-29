@@ -15,52 +15,6 @@ import numpy as np
 ########################################################################
 ########################################################################
 
-
-"""Used in A-star algorithm; it takes the source and destination node
-and calculate the summation of straight line distance between each node
-to origin and each node to the destination.
-
-The value of the summation is not the actual distance but up to the some actual scale as 
-we use matplotlib coordinates (x,y)
-
-Parameters
-----------
-G: NetworkX graph returned from osmnx methods
-origin: The id of the origin node in the graph 
-destination: The id of the destination node in the graph
-measuring_dist: The method used in measuring distance between nodes; staright line distance,
-                harversine distance
-
-Returns
--------
-distanceGoal, distanceOrigin: dictionaries that associate the proper distance with node id
-
-"""
-
-def astar_heuristic(G, origin, destination, measuring_dist = straight_line):
-    distanceGoal = dict()
-    distanceOrigin = dict()
-
-    originX = G.nodes[origin]['x']
-    originY = G.nodes[origin]['y']
-
-    destX = G.nodes[destination]['x']
-    destY = G.nodes[destination]['y']
-
-    for node in G:
-        pointX = G.nodes[node]['x']
-        pointY = G.nodes[node]['y']
-
-        originDist = measuring_dist(originX, originY, pointX, pointY)
-        destDist = measuring_dist(pointX, pointY, destX, destY)
-
-        distanceGoal[node] = originDest
-        distanceOrigin[node] = destDist
-
-    return distanceGoal, distanceOrigin
-
-
-
 """Calculates the straight line distance between two points on earth
 (specified in decimal degrees). This is of course an approximation, but 
 acceptable one if the two points are close to each other
@@ -109,6 +63,49 @@ def haversine_distance (lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a)) 
     r = 6371 # Radius of earth in kilometers. Use 3956 for miles
     return c * r
+
+"""Used in A-star algorithm; it takes the source and destination node
+and calculate the summation of straight line distance between each node
+to origin and each node to the destination.
+
+The value of the summation is not the actual distance but up to the some actual scale as 
+we use matplotlib coordinates (x,y)
+
+Parameters
+----------
+G: NetworkX graph returned from osmnx methods
+origin: The id of the origin node in the graph 
+destination: The id of the destination node in the graph
+measuring_dist: The method used in measuring distance between nodes; staright line distance,
+                harversine distance
+
+Returns
+-------
+distanceGoal, distanceOrigin: dictionaries that associate the proper distance with node id
+
+"""
+
+def astar_heuristic(G, origin, destination, measuring_dist = straight_line):
+    distanceGoal = dict()
+    distanceOrigin = dict()
+
+    originX = G.nodes[origin]['x']
+    originY = G.nodes[origin]['y']
+
+    destX = G.nodes[destination]['x']
+    destY = G.nodes[destination]['y']
+
+    for node in G:
+        pointX = G.nodes[node]['x']
+        pointY = G.nodes[node]['y']
+
+        originDist = measuring_dist(originX, originY, pointX, pointY)
+        destDist = measuring_dist(pointX, pointY, destX, destY)
+
+        distanceGoal[node] = originDest
+        distanceOrigin[node] = destDist
+
+    return distanceGoal, distanceOrigin
 
 
 

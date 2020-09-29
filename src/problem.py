@@ -11,9 +11,9 @@ import numpy as np
 """
 Used in A-star algorithm; it takes the source and destination node
 and calculate the summation of straight line distance between each node
-and to origin and each node to the destination.
+to origin and each node to the destination.
 
-The value of the summation is not the actual distance but up to the actual scale as 
+The value of the summation is not the actual distance but up to the some actual scale as 
 we use matplotlib coordinates (x,y)
 
 return dictionary

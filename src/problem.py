@@ -102,7 +102,7 @@ def astar_heuristic(G, origin, destination, measuring_dist = straight_line):
         originDist = measuring_dist(originX, originY, pointX, pointY)
         destDist = measuring_dist(pointX, pointY, destX, destY)
 
-        distanceGoal[node] = originDest
+        distanceGoal[node] = originDist
         distanceOrigin[node] = destDist
 
     return distanceGoal, distanceOrigin

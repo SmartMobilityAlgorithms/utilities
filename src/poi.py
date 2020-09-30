@@ -121,8 +121,10 @@ class poi:
     def __hash__(self):
         return self.osmid
 
+    # representing a POI object with the first sentence in the full address
+    # and its OSM id -- you can easily use OSM id to retrieve POI objects from container
     def __repr__(self):
-        return f"{self.name}[{self.osmid}]"
+        return f"{self.address.split(",")[0]}[{self.osmid}]"
 
 
 ##########################################################################################################

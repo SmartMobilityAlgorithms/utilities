@@ -113,7 +113,7 @@ class poi:
             location = location[::-1]   # from (longitude, latitude) to (latitude, longitude) so ipyleaflet can handle it
             route_coords.append(tuple(location))
         
-        return {'route' : route_coords, 
+        return {'coords' : route_coords, 
                 'length' : cost,
                 'duration' : duration}
     

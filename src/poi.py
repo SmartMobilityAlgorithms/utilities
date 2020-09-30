@@ -1,6 +1,6 @@
 import requests
 from ipywidgets import HTML
-from ipyleaflet import Map, Marker, Popup
+from ipyleaflet import Map, Marker, AntPath, Popup
 
 
 """Class for creating POI (point of interest) with its full detailed geographic data
@@ -152,17 +152,17 @@ m: ipyleaflet map
 """
 
 def drawRoute(route, zoom = 16):
-    m = ipyleaflet.Map(center = route(len(route) // 2), zoom = zoom)
+    m = Map(center = route(len(route) // 2), zoom = zoom)
 
-    src_marker = ipyleaflet.Marker(location = route[0], draggable = False)
+    src_marker = Marker(location = route[0], draggable = False)
     m.add_layer(s_marker)
 
-    dest_marker = ipyleaflet.Marker(location = route[len(route) - 1], draggable = False)
+    dest_marker = Marker(location = route[len(route) - 1], draggable = False)
     m.add_layer(d_marker)
 
     for u, v in zip(route[0:], route[1:]):
         step = map(list, [u, v])
-        step_path = ipyleaflet.AntPath(
+        step_path = AntPath(
             locations = [*step],
             dash_array=[1, 10],
             delay=1000,

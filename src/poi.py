@@ -134,4 +134,24 @@ class poi:
 ##########################################################################################################
 
 
-def 
+def draw_route(route, zoom = 16):
+    m = ipyleaflet.Map(center = route(len(route) // 2), zoom = zoom)
+
+    src_marker = ipyleaflet.Marker(location = route[0], draggable = False)
+    m.add_layer(s_marker)
+
+    dest_marker = ipyleaflet.Marker(location = route[len(route) - 1], draggable = False)
+    m.add_layer(d_marker)
+
+    for u, v in zip(route[0:], route[1:]):
+        step = map(list, [u, v])
+        step_path = ipyleaflet.AntPath(
+            locations = [*step],
+            dash_array=[1, 10],
+            delay=1000,
+            color='black',
+            pulse_color='red'
+        )
+        m.add_layer(step_path)
+
+    return m

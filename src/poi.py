@@ -152,14 +152,18 @@ m: ipyleaflet map
 """
 
 def drawRoute(route, zoom = 16):
-    m = Map(center = route(len(route) // 2), zoom = zoom)
+    # getting the center of the route
+    m = Map(center = route[len(route) // 2], zoom = zoom)
 
+    # mark the source node coordinates
     src_marker = Marker(location = route[0], draggable = False)
     m.add_layer(s_marker)
 
+    # mark the destination node coordinates
     dest_marker = Marker(location = route[len(route) - 1], draggable = False)
     m.add_layer(d_marker)
 
+    # draw AntPath between every two consecutive nodes
     for u, v in zip(route[0:], route[1:]):
         step = map(list, [u, v])
         step_path = AntPath(

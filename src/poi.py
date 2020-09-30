@@ -36,16 +36,17 @@ class poi:
     ... 'University of Toronto, St George Street, University—Rosedale, Old Toronto, Toronto, Peel, Golden Horseshoe, Ontario, M5T 2Z9, Canada'
 
     """
-    def __init__(self, name, country, osm_type = "node"):
-        self.__geo_decode(name, country, osm_type)
+    def __init__(self, name, country):
+        self.__geo_decode(name, country)
 
     """ Calls Nominatim API for geodecoding the address
     """
 
-    def __geo_decode(self, name, country, osm_type):
+    def __geo_decode(self, name, country):
 
         # check https://nominatim.org/release-docs/develop/
 
+        # try to issue this request from your terminal or smth to see the full response
         response = requests.get(f'https://nominatim.openstreetmap.org/search?q={name} - {country}&format=geocodejson')
 
         if response.status_code != 200:
@@ -55,21 +56,14 @@ class poi:
 
         # the response may contain multiple places with
         # the same name, we will only take the first result
-        # of the response which would be the place you desired
+        # of the response which "probably" would be the place you wanted
         # that is why we get the index zero from the response
-        # IF and only if the place returned has the same type
-        # that we want, which is usually node. Remember that we
-        # have multiple types of data in osm format like node
-        # and way and relation
+        # One other thing, maybe you wanted place "x" but there is
+        # a way called "x" and a node called "x" (remember osm data types)
+        # what you get could be the way not the node which you probably node
+        # it won't matter at all most of the time but you need to know that
         index = 0
         place = response_json['features'][index] 
-
-        while place['properties']['geocoding']['osm_type'] != osm_type:
-            index += 1
-            try:
-                place = response_json['features'][index]
-            except:
-                raise ValueError(f"We couldn't find places with the type {osm_type}")
 
         self.address = place['properties']['geocoding']['label']
         self.osmid = place['properties']['geocoding']['osm_id']

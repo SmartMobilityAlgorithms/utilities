@@ -86,7 +86,8 @@ class poi:
     Route dictionary: dictionary that consists of three keys
                     1. 'route' which is the (lat, log) coordinates that defines the route
                     2. 'length' the length of the route by meters
-                    3. 'duration' OSRM calculates that based on multiple things like max speed
+                    3. 'duration' this is how many seconds would it take to finish that route
+                    OSRM calculates that based on multiple things like max speed
                     of the sub-routes and it also takes on consideration multiple things like
                     the number of turns in a given route and obstacles like gates in the roads
                     and such things. For EXACTLY how they do it please go to Project-OSRM/osrm-backend/profiles/car.lua

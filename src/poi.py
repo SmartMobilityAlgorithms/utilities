@@ -132,7 +132,7 @@ class poi:
     # and its OSM id -- you can easily use OSM id to retrieve POI objects from container
     def __repr__(self):
         name = self.address.split(",")[0]
-        return f"Name: {name}\nID: {self.osmid}"
+        return f"Name: {name} ID: {self.osmid}"
 
 
 ##########################################################################################################

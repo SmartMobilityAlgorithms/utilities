@@ -151,7 +151,7 @@ Returns
 m: ipyleaflet map
 """
 
-def drawRoute(route, zoom = 16):
+def drawRoute(route, zoom = 12):
     # getting the center of the route
     m = Map(center = route[len(route) // 2], zoom = zoom)
 

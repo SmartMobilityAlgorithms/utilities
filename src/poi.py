@@ -134,7 +134,22 @@ class poi:
 ##########################################################################################################
 
 
-def draw_route(route, zoom = 16):
+"""This functions takes coordinates of a route between two POIs
+and renders the route on ipyleaflet map.
+
+It is meant to be used with the routes returned from poi objects.
+
+Parameters
+----------
+route: is a list of coordinates point (lat, log)
+zoom: is how much zoom the map would make on the route rendered
+
+Returns
+-------
+m: ipyleaflet map
+"""
+
+def drawRoute(route, zoom = 16):
     m = ipyleaflet.Map(center = route(len(route) // 2), zoom = zoom)
 
     src_marker = ipyleaflet.Marker(location = route[0], draggable = False)

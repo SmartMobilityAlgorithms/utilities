@@ -157,11 +157,11 @@ def drawRoute(route, zoom = 16):
 
     # mark the source node coordinates
     src_marker = Marker(location = route[0], draggable = False)
-    m.add_layer(s_marker)
+    m.add_layer(src_marker)
 
     # mark the destination node coordinates
     dest_marker = Marker(location = route[len(route) - 1], draggable = False)
-    m.add_layer(d_marker)
+    m.add_layer(dest_marker)
 
     # draw AntPath between every two consecutive nodes
     for u, v in zip(route[0:], route[1:]):

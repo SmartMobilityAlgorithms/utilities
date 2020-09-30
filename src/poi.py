@@ -1,5 +1,7 @@
 import requests
-import ipyleaflet
+from ipywidgets import HTML
+from ipyleaflet import Map, Marker, Popup
+
 
 """Class for creating POI (point of interest) with its full detailed geographic data
 """
@@ -168,5 +170,43 @@ def drawRoute(route, zoom = 16):
             pulse_color='red'
         )
         m.add_layer(step_path)
+
+    return m
+
+"""Renders POIs on ipyleaflet maps with popup containing the POI name
+
+Parameters
+----------
+POIS: list of poi objects
+
+Returns
+-------
+m: ipyleaflet map
+"""
+
+def drawPOIS(POIS, zoom=12):
+    centerLat, centerLog = 0, 0
+
+    # taking the average of all latitude and longitude of all the POIs
+    # to get the center of the map 
+
+    for poi in POIS:
+        centerLat += poi.coordinates[0]
+        centerLog += poi.coordinates[1]
+    centerLat /= len(POIS)
+    centerLog /= len(POIS)
+    center = (centerLog, centerLat)
+
+    m = Map(center=center, zoom=zoom, close_popup_on_click=False)
+
+    # creating the popup messages on the markers
+    # with the name of the POI
+    for poi in POIS:
+        name = poi.address.split(",")[0]
+        marker = Marker(location=poi.coordinates[::-1])
+        text = HTML()
+        text.value = f"{name}"
+        marker.popup = text
+        m.add_layer(marker)
 
     return m

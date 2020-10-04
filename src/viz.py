@@ -6,6 +6,22 @@ import folium as fl
 import osmnx as ox
 import networkx as nx
 
+"""Draw leaflet map based for the graph passed to the function
+with highlighting certain nodes with a marker. ipyleaflet rendering 
+can be a little slow when dealing with graphs with many node, in that 
+case when number of nodes > 1000, the function reverts to folium for rendering
+which is a plain black and white rendering of the map not like ipyleaflet
+
+Parameters
+----------
+G: networkx graph returned by osmnx
+highlight: list of nodes to be marked on the leaflet map
+zoom: the initial zooming level for the rendered map
+
+Returns
+-------
+m: ipyleaflet/folium map for the osmnx graph with optional highlighted nodes
+"""
 
 def draw_map(G, highlight = None , zoom = 16):
     """ draws ipyleaflet map with location as center of the map """
@@ -42,8 +58,25 @@ def draw_map(G, highlight = None , zoom = 16):
 
     return m
 
+"""Draw leaflet an AntPath route based on the graph and the route passed 
+to the function with highlighting the source and destination node of the route. 
+ipyleaflet rendering can be a little slow when dealing with graphs with many node, in that 
+case when number of nodes > 1000, the function reverts to folium for rendering
+which is a plain black and white rendering of the map not like ipyleaflet
+
+Parameters
+----------
+G: networkx graph returned by osmnx
+route: list of nodes from the graph that represent connected route
+zoom: the initial zooming level for the rendered map
+
+Returns
+-------
+m: ipyleaflet/folium map for the osmnx graph with the route highlighted as AntPath layer
+"""
+
+
 def draw_route(G, route, zoom = 16):
-    """ draws ipyleaflet map with antpath as route"""
     
     if len(G) >= 1000:
         print(f"The graph has {len(G)} which is a lot, we will use basic faster folium instead")

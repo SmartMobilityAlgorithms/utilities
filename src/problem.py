@@ -25,7 +25,8 @@ lat1: latitude of the second point
 lon2: longitude of the second point
 lat2: latitude of the second point
 
-Returns:
+Returns
+-------
 distance: the straight line distance calculated by pythagoras theorem
 
 """

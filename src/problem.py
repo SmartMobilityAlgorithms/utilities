@@ -3,6 +3,7 @@
 import math
 import heapq
 import random
+import itertools
 from collections import deque
 import numpy as np
 
@@ -179,3 +180,31 @@ def mutate(G, route):
     
     return path
 
+"""Crossover between two routes. This is more or less 1-point crossover, but choosing the crossover
+node isn't random because sometimes it is not possible to crossover two routes. We choose the crossover
+node by searching both routes to find a node that is common between them and split at that node. This route
+may not be there, in that case we just return the first route without doing anything.
+
+Parameters
+----------
+route_1: The first route
+route_2: The second route
+
+Returns
+-------
+The result of doing crossover between route_1 and route_2
+"""
+
+def cross_over(route_1, route_2):
+    intersection = [*itertools.filterfalse(lambda element : element in [origin.osmid, destination.osmid] , list(set(route_1) & set(route_2)))]
+    if len(intersection) == 0: return route_1 # if there is not common node, just return the first route
+
+    cross_over_point = random.choice(intersection)
+    first_point = route_1.index(cross_over_point)
+    second_point = route_2.index(cross_over_point)
+
+    if probability(0.5):
+        return route_1[:first_point] + route_2[second_point:]
+    else:
+        return route_2[:second_point] + route_1[first_point:]
+    

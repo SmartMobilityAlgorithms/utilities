@@ -214,3 +214,19 @@ def cross_over(route_1, route_2):
     else:
         return route_2[:second_point] + route_1[first_point:]
     
+"""Probabilistically choose number of elements from a pool based
+on their probability distribution/their value.
+
+Parameters
+----------
+pool: pool of choices you have to choose from
+num_of_choices: number of elements that would be choosed from the list
+probability_dist: probability distribution that describes the relative weight 
+                  of each element in the pool
+
+Returns
+-------
+a list of the choices made
+"""
+def select_best(pool, num_of_choices, probability_dist):
+        return list(np.random.choice(pool, size = num_of_choices, p=probability))

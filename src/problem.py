@@ -6,6 +6,7 @@ import random
 from collections import deque
 import numpy as np
 
+from common import *
 
 
 ########################################################################
@@ -127,3 +128,31 @@ def astar_heuristic(G, origin, destination, measuring_dist = straight_line):
 
 def exp_schedule(k=20, lam=0.005, limit=100):
     return lambda t: (k * np.exp(-lam * t) if t < limit else 0)
+
+
+
+##########################################################################################################
+##########################################################################################################
+
+########################################################################
+########################################################################
+############################# Genetic Algorithm ########################
+########################################################################
+########################################################################
+
+
+def mutate(G, route):
+    source = route[0]
+    destination = route[len(route) - 1]
+    failed = random.choice(route)
+
+    path = shortest_path_with_failed_nodes(G, route, source, destination, [failed])
+
+    # This method could fail because of a lot of factors relating to the graph structure
+    # Check the documentation fo the shortest_path_with_failed_nodes to lear more
+    while path == math.inf:
+        failed = random.choice(route)
+        path = shortest_path_with_failed_nodes(G, route, source, destination, [failed])
+    
+    return path
+

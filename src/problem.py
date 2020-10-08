@@ -229,4 +229,4 @@ Returns
 a list of the choices made
 """
 def select_best(pool, num_of_choices, probability_dist):
-        return list(np.random.choice(pool, size = num_of_choices, p=probability))
+        return random.choices(population=pool, weights=probability_dist, k= num_of_choices)

@@ -6,7 +6,7 @@ import random
 from collections import deque
 import numpy as np
 
-from common import *
+from .common import *
 
 
 ########################################################################

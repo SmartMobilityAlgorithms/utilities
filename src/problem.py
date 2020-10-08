@@ -196,7 +196,10 @@ The result of doing crossover between route_1 and route_2
 """
 
 def cross_over(route_1, route_2):
-    intersection = [*itertools.filterfalse(lambda element : element in [origin.osmid, destination.osmid] , list(set(route_1) & set(route_2)))]
+    origin = route_1[0]
+    destination = route_1[len(route_1) - 1]
+    
+    intersection = [*itertools.filterfalse(lambda element : element in [origin, destination] , list(set(route_1) & set(route_2)))]
     if len(intersection) == 0: return route_1 # if there is not common node, just return the first route
 
     cross_over_point = random.choice(intersection)

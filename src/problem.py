@@ -123,11 +123,22 @@ def astar_heuristic(G, origin, destination, measuring_dist = straight_line):
 
 
 
-"""Possible schedule function for simulated annealing
+"""Schedule exponential function for cooling in simulated annealing
+
+Parameters
+----------
+k: starting temperature of the function
+lam: the rate of temperature decreasing
+limit: number of iterations after which the function produces zero value
+
+Returns
+-------
+function: it is lambda function that take the current number of iteration
 """
 
 def exp_schedule(k=20, lam=0.005, limit=100):
-    return lambda t: (k * np.exp(-lam * t) if t < limit else 0)
+    function = lambda t: (k * np.exp(-lam * t) if t < limit else 0)
+    return function
 
 
 
@@ -140,7 +151,19 @@ def exp_schedule(k=20, lam=0.005, limit=100):
 ########################################################################
 ########################################################################
 
+"""Mutation policy for routes. It fails a random node in the route and
+stitch the resulting gap and that is it. Sometimes this process fail, so
+we iterate until it succeed.
 
+Parameters
+----------
+G: NetworkX graph returned from osmnx methods
+route: The route to be mutated
+
+Returns
+-------
+path: mutated version from the route
+"""
 def mutate(G, route):
     source = route[0]
     destination = route[len(route) - 1]

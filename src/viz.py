@@ -28,7 +28,18 @@ def draw_map(G, highlight = None , zoom = 16):
     
     if len(G) >= 1000:
         print(f"The graph has {len(G)} which is a lot, we will use basic faster folium instead")
-        m = ox.plot_graph_folium(G = G)
+        if highlight:
+            center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]
+            G_gdfs = ox.graph_to_gdfs(G)
+            nodes_frame = G_gdfs[0]
+            ways_frame = G_gdfs[1]
+            m = ox.plot_graph_folium(G = G)
+            for node_osmid in highlight:
+                node = nodes_frame.loc[node_osmid]
+                node_xy = [node['y'], node['x']]
+                fl.Marker(node_xy).add_to(m)
+        else: 
+            m = ox.plot_graph_folium(G = G)
         return m
         
     center_osmid = ox.stats.extended_stats(G,ecc=True)['center'][0]

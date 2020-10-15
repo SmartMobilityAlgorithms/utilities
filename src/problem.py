@@ -152,6 +152,10 @@ def exp_schedule(k=20, lam=0.005, limit=100):
 ########################################################################
 ########################################################################
 
+#######################################################################
+############################ For Shortest Path Problem ################
+#######################################################################
+
 """Mutation policy for routes. It fails a random node in the route and
 stitch the resulting gap and that is it. Sometimes this process fail, so
 we iterate until it succeed.
@@ -232,3 +236,87 @@ a list of the choices made
 """
 def select_best(pool, num_of_choices, probability_dist):
         return random.choices(population=pool, weights=probability_dist, k= num_of_choices)
+
+
+#########################################################################
+############################# Combinatorial Problems ####################
+#########################################################################
+
+#
+#                       Crossover Operators
+#
+
+"""This function does partially mapped crossover between two permutations.
+It works on any list of elements that supports equality operator.
+
+Parameters
+----------
+firstPermutation: The first parent to go into crossover
+secondPermutation: The second parent to go into crossover
+
+Returns
+-------
+child: The product of crossing-over both parents permutations
+"""
+
+
+def PMX_crossover(firstPermutation, secondPermutation):
+    # we need to know the length of either permutation
+    # they must be equal in size
+    length = len(firstPermutation)
+    
+    # (1) choosing the two crossover points
+    #     by randomly select a point from the
+    #     first half and another point from the second half
+    first_Cross = random.randint(0, length // 2)
+    second_Cross = random.randint(length // 2 + 1, length - 1) + 1
+    
+    # (2) initializing the two equal sized segments
+    #     and create another array with the same size of 
+    #     any permutation to be the child
+    child = [None] * length
+    subP1 = firstPermutation[first_Cross:second_Cross]
+    subP2 = secondPermutation[first_Cross:second_Cross]
+    
+    # (3) copy the elements in the segment from the first permutation
+    #    into the same segment in the child
+    child[first_Cross:second_Cross] = subP1
+    
+    # (4) finding common elements in the segment from the
+    #     the first permutation and the second permutation
+    #     and get its mirror from first permutation to second
+    pairs = list()
+    for element in subP2:
+        if element not in subP1:
+            pairs.append((element, subP1[subP2.index(element)]))
+    
+    # (5) copying into the child all the elements in the segment
+    #.    that are present in the first permutation segment but
+    #.    aren't present in the second permutation segment.
+    #.    if not we need to copy that element in place outside
+    #     the segment in a place where we are sure that would
+    #.    result into inadmissible permutations.
+    for pair in pairs:
+        second = pair[1]
+        if second not in subP2:
+            index = secondPermutation.index(second)
+            child[index] = pair[0]
+        else:
+            # when there is an element from the segment of the first
+            # permutation in the segment of the second permutation 
+            reflect = firstPermutation[secondPermutation.index(second)]
+            
+            # bouncing back and forth between the two arrays indices
+            # to get out of second permutation segment
+            while reflect in subP2:
+                bounce = reflect
+                reflect = firstPermutation[secondPermutation.index(bounce)]
+            child[secondPermutation.index(reflect)] = pair[0]
+    
+    # (6) go through all the elements that have not been assigned
+    #     yet in the child array and assign them with the second permutation
+    #     elements
+    for i in range(length):
+        if child[i] == None:
+            child[i] = secondPermutation[i]
+    return child

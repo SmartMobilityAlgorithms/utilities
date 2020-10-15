@@ -320,3 +320,57 @@ def PMX_crossover(firstPermutation, secondPermutation):
         if child[i] == None:
             child[i] = secondPermutation[i]
     return child
+
+"""This function does edge crossover between two permutations.
+It works on any list of elements that supports equality operator.
+
+Parameters
+----------
+firstPermutation: The first parent to go into crossover
+secondPermutation: The second parent to go into crossover
+
+Returns
+-------
+child: The product of crossing-over both parents permutations
+"""
+
+def ERO_crossover(G, firstPermutation, secondPermutation):
+    # constructing edge table
+    edgeTable = dict()
+    elements = firstPermutation[:]
+    length = len(elements)
+    
+    # just like adjacency list of nodes
+    # in a given graph, but it is actually
+    # the result of union between the two given
+    # adjacency lists of a certain parent from both graphs
+    for source in elements:
+        edgeTable[source] = list()
+        firstPermutationAdj = G[firstPermutation.index(source)]
+        secondPermutationAdj = G[secondPermutation.index(source)]
+        adjList = list(set().union(firstPermutationAdj, secondPermutationAdj))
+        edgeTable[source]= adjList
+
+    child = list()
+    parent = random.choice(elements)
+    elements.remove(parent)
+    
+    # terminate when the length of the child is the same
+    # as the length of their parent
+    while len(child) < length:
+        child.append(parent)
+
+        # remove the parent from all the adjacency lists
+        for adjList in edgeTable.values():
+            try:
+                adjList.remove(parent)
+            except:
+                pass
+
+        parentAdjList = edgeTable[parent][:]
+        del edgeTable[parent]
+
+        if len(parentAdjList) == 0: continue
+        parent = min(parentAdjList, key = lambda parent : len(edgeTable[parent]))
+
+    return child

@@ -322,12 +322,13 @@ def PMX_crossover(firstPermutation, secondPermutation):
     return child
 
 """This function does edge crossover between two permutations.
-It works on any list of elements that supports equality operator.
+It only works on networkx graph permutations.
 
 Parameters
 ----------
 firstPermutation: The first parent to go into crossover
 secondPermutation: The second parent to go into crossover
+G: the networkx graph that the two permutations are generated from
 
 Returns
 -------
@@ -373,4 +374,37 @@ def ERO_crossover(G, firstPermutation, secondPermutation):
         if len(parentAdjList) == 0: continue
         parent = min(parentAdjList, key = lambda parent : len(edgeTable[parent]))
 
+    return child
+
+"""This function does order one crossover between two permutations.
+It works on any list of elements that supports equality operator.
+
+Parameters
+----------
+firstPermutation: The first parent to go into crossover
+secondPermutation: The second parent to go into crossover
+
+Returns
+-------
+child: The product of crossing-over both parents permutations
+"""
+
+def ordOne_crossover(firstPermutation, secondPermutation):
+    length = len(firstPermutation)
+    
+    # choose the start and the end of the segment 
+    # to be copied from the first parent
+    start_Segment = random.randint(0, length // 2)
+    end_Segment = random.randint(length // 2 + 1, length - 1) + 1
+    
+    # create a child
+    child = list()
+    
+    # add the randomaly selected segment from the first parent
+    child.extend(firstPermutation[start_Segment: end_Segment])
+    
+    # add what is left from the second parent that wasn't added from the first parent
+    residueFromSegment = list(set(secondPermutation) - set(firstPermutation[start_Segment: end_Segment]))
+    child.extend(residueFromSegment)
+    
     return child

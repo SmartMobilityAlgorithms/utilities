@@ -408,3 +408,44 @@ def ordOne_crossover(firstPermutation, secondPermutation):
     child.extend(residueFromSegment)
     
     return child
+
+
+
+#########################################################################
+############################# Combinatorial Problems ####################
+#########################################################################
+
+#
+#                       Mutation Operators
+#
+
+"""This function does insert mutation over the given permutation.
+It chooses two random genes from the list and makes sure that they
+are next to each other by shifting the list.
+
+It preserves most of the order and adjacency information
+
+Parameters
+----------
+permuation: The permutation to be mutated
+
+Returns
+-------
+child: The mutated permutation
+"""
+def insert_mutation(permutation):
+    # copying the list so we don't mess with the original
+    child = permutation[:]
+    
+    # choose two random genes and make sure that they are different
+    first_gene = random.choice(child)
+    second_gene = random.choice(child)
+    while first_gene == second_gene:
+        first_gene = random.choice(child)
+        second_gene = random.choice(child)
+    
+    # removing the second gene from the list and insert it just after the first
+    child.remove(second_gene)
+    geneNewIndex = child.index(first_gene) + 1
+    child.insert(geneNewIndex, second_gene)
+    return child

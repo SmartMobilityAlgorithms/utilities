@@ -312,6 +312,16 @@ def one_way_route(G, route):
                 j+=1
     return route
 
+
+"""
+Yield random r-permutations of the list of nodes
+"""
+def random_tour(iterable, r=None, number_of_perms = 50):
+    for i in range(number_of_perms):
+        pool = tuple(iterable)
+        r = len(pool) if r is None else r
+        yield list(random.sample(pool, r))
+
 """
 Return true with probability p.
 """

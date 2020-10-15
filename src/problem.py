@@ -465,7 +465,7 @@ def swap_mutation(permutation):
     # copying the list so we don't mess with the original
     child = permutation[:]
 
-    length = len(child)
+    length = range(len(child))
 
     # choose two random gene position so they could be swaped
     first_gene_pos, second_gene_pos = random.sample(length, 2)

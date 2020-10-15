@@ -449,3 +449,29 @@ def insert_mutation(permutation):
     geneNewIndex = child.index(first_gene) + 1
     child.insert(geneNewIndex, second_gene)
     return child
+
+"""This function does swap mutation over the given permutation.
+It chooses two random genes from the list and swap them together.
+
+Parameters
+----------
+permuation: The permutation to be mutated
+
+Returns
+-------
+child: The mutated permutation
+"""
+def swap_mutation(permutation):
+    # copying the list so we don't mess with the original
+    child = permutation[:]
+
+    length = len(child)
+
+    # choose two random gene position so they could be swaped
+    first_gene_pos, second_gene_pos = random.sample(length, 2)
+
+    # swapping 
+    child[first_gene_pos], child[second_gene_pos] =\
+    child[second_gene_pos], child[first_gene_pos] 
+
+    return child

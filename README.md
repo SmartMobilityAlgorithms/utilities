@@ -8,6 +8,14 @@ Here is the general structure and where to look at if you want to see what is ha
 
 ```
 utils
+|
+|
+|
+└─── solvers.py ==> This module is meant to be just off-the-shelf solvers for combinatorial problems
+|                   that you can use directly after bundling your problem configuration as object
+|                   per the interface that provided in ``problem.py``
+|
+|
 │       
 └─── common.py ==> This module is here for providing a nice interface to unnecessary complexity,
 |                  like handling graphs produced from osmnx and other utilities associated with

@@ -13,7 +13,9 @@ utils
 |
 └─── solvers.py ==> This module is meant to be just off-the-shelf solvers for combinatorial problems
 |                   that you can use directly after bundling your problem configuration as object
-|                   per the interface that provided in ``problem.py``
+|                   per the interface that is provided in ``problem.py``. We will walk through the design
+|                   and the thought process for writing every solver by solving a simple problem with it
+|                   after that you can just invoke the solver directly from this module.
 |
 |
 │       
@@ -21,9 +23,11 @@ utils
 |                  like handling graphs produced from osmnx and other utilities associated with
 │                  graphs.
 │ 
+|
+|
 │
-└─── problem.py ==> This module is for problem-specific utilities like the heuristic functions 
-│                   or data structures used in algorithms
+└─── problem.py ==> This module is for defining a number of classes for recurring combinatorial problems
+|                   that could be consumed by methods in ``solvers.py``
 │ 
 │
 │
